@@ -6,9 +6,11 @@ using NUnit.Framework;
 namespace Microwave.Test.Unit
 {
     [TestFixture]
-    public class LightTest
+    public class OutputTest
     {
-        private Light uut;
+        private Light lit;
+        private Timer tim;
+        private PowerTube tub;
         private IOutput output;
 
         [SetUp]
@@ -16,38 +18,21 @@ namespace Microwave.Test.Unit
         {
             output = Substitute.For<IOutput>();
 
-            uut = new Light(output);
+
+            lit = new Light(output);
+            tim = new Timer();
+            tub = new PowerTube(output);
         }
 
         [Test]
-        public void TurnOn_WasOff_CorrectOutput()
+        public void SendToOutputTrue()
         {
-            uut.TurnOn();
+            lit.TurnOn();
+            
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("on")));
         }
 
-        [Test]
-        public void TurnOff_WasOn_CorrectOutput()
-        {
-            uut.TurnOn();
-            uut.TurnOff();
-            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("off")));
-        }
-
-        [Test]
-        public void TurnOn_WasOn_CorrectOutput()
-        {
-            uut.TurnOn();
-            uut.TurnOn();
-            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("on")));
-        }
-
-        [Test]
-        public void TurnOff_WasOff_CorrectOutput()
-        {
-            uut.TurnOff();
-            output.DidNotReceive().OutputLine(Arg.Is<string>(str => str.Contains("off")));
-        }
+        
 
 
 
