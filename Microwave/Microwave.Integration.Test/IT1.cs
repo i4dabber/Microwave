@@ -8,6 +8,7 @@ using MicrowaveOvenClasses.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using MicrowaveOvenClasses.Controllers;
+using System.Threading;
 
 namespace Microwave.Integration.Test
 {
@@ -33,7 +34,7 @@ namespace Microwave.Integration.Test
         public void Setup()
         {
             output = Substitute.For<IOutput>();
-            tim = new Timer();
+            tim = new MicrowaveOvenClasses.Boundary.Timer();
             tub = new PowerTube(output);
             disp = new Display(output);
             ui = Substitute.For<IUserInterface>();
@@ -54,6 +55,16 @@ namespace Microwave.Integration.Test
         }
 
         [TestCase]
+        public void isTimeRemaining_theexpected()
+        {
+            cook.StartCooking(90, 1);
+            Thread.Sleep(1500);
+
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
+
+        }
+
+        [TestCase]
         public void isCooking_WhileOn()
         {
             cook.StartCooking(90, 5);
@@ -61,22 +72,8 @@ namespace Microwave.Integration.Test
 
         }
 
-        [TestCase]
-        public void isPowertube_Off()
-        {
-            Assert.Throws<System.ArgumentOutOfRangeException>(() => tub.TurnOff());
-        }
 
-
-
-        [TestCase]
-        public void isCookingbeenStopped_toOutput()
-        {
-            cook.Stop();
-            
-            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
-            tub.TurnOff();
-        }
+        
 
 
 
