@@ -3,54 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MicrowaveOvenClasses.Boundary;
+using MicrowaveOvenClasses.Interfaces;
+using NSubstitute;
+using NUnit.Framework;
+using MicrowaveOvenClasses.Controllers;
 
 namespace Microwave.Integration.Test
 {
-    using MicrowaveOvenClasses.Boundary;
-    using MicrowaveOvenClasses.Interfaces;
-    using NSubstitute;
-    using NUnit.Framework;
+    
 
-    namespace Microwave.Test.Unit
-    {
-        [TestFixture]
-        public class OutputTest
+[TestFixture]
+    public class CookControllerTest
         {
-            private Light lit;
-            private Timer tim;
-            private Door door;
-            private PowerTube tub;
-            private ITimer time;
+       
+            private ITimer tim;    
+            private IPowerTube tub;
+            private IDisplay disp;
+
+            private ICookController cook;
+
+
             private IOutput output;
+            private IUserInterface ui;
+            
 
-            [SetUp]
-            public void Setup()
+        [SetUp]
+        public void Setup()
+        {
+            output = Substitute.For<IOutput>();
+                tim = new Timer();
+                tub = new PowerTube(output);
+                disp = new Display(output);
+                ui = Substitute.For<IUserInterface>();
+            cook = new CookController(tim, disp, tub, ui);
+
+
+
+        }
+
+
+        [TestCase]
+            public void isCookingStartingprintingtoOutput ()
             {
-                output = Substitute.For<IOutput>();
+            cook.StartCooking(90, 5);
 
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube works with 90 %")));
 
-                lit = new Light(output);
-
-                door = new Door();
-                
-                
-            }
-
-           
-            [Test]
-            public void OpenDoorLightReceiver()
-            {
-
-                lit.TurnOff();
-
-                
-                door.Open();
-
-                
-                output.Received().OutputLine(Arg.Is<string>(str => str.Contains("on")));
-                
-  
-            }
+        }
 
 
 
@@ -58,4 +58,4 @@ namespace Microwave.Integration.Test
 
         }
     }
-}
+
