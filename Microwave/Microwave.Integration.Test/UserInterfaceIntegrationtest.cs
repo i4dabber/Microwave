@@ -75,13 +75,13 @@ namespace Microwave.Integration.Test
             [Test]
             public void PowerPressed_Started()
             {
-                tUI.OnPowerPressed(null, null);
+                tUI.OnPowerPressed(50, null);
 
-                //inputPower.Received();
+                inputPower.Received(50);
 
 
 
-                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("works")));
+                //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("shows")));
             }
 
 
