@@ -72,8 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UserInterfaceIntegrationtest.cs" />
-    <Compile Include="IT1.cs" />
-    <Compile Include="IT2_Controller.cs" />
+    <Compile Include="IT1_CookControlTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
