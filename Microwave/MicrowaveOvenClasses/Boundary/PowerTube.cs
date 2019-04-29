@@ -16,7 +16,7 @@ namespace MicrowaveOvenClasses.Boundary
 
         public void TurnOn(int power)
         {
-            double powerPercentage = Math.Round(power * 100.0 / 700.0, 0);
+            double powerPercentage = Math.Round(power * 100.0 / 700.0, 1);
             if (powerPercentage < 1 || 100 < powerPercentage)
             {
                 throw new ArgumentOutOfRangeException("power", powerPercentage, "Must be between 1 and 100 % (incl.)");
