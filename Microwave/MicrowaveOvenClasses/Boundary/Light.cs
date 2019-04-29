@@ -27,6 +27,7 @@ namespace MicrowaveOvenClasses.Boundary
             {
                 myOutput.OutputLine("Light is turned off");
                 isOn = false;
+
             }
         }
 
