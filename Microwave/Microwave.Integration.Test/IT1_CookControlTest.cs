@@ -45,7 +45,7 @@ namespace Microwave.Integration.Test
         }
 
 
-        [TestCase]
+        [Test] //Tester for om Output klassen modtager data fra this og de andre udnyttede klasser
         public void isCooking_StartingprintingtoOutput()
         {
             cook.StartCooking(50, 5);
@@ -54,7 +54,7 @@ namespace Microwave.Integration.Test
 
         }
 
-        [TestCase]
+        [Test] //Tester for om tiden vi modtager fra Timer klasses er det forventede vi får i this
         public void isTimeRemaining_theexpected()
         {
             cook.StartCooking(90, 1);
@@ -64,32 +64,50 @@ namespace Microwave.Integration.Test
 
         }
 
-        [TestCase]
+
+        [Test] //Tester for om tiden er udeløbet, dvs efter 10 sek bør man den dø
+        public void isCookingthen_StoppingTime()
+        {
+            cook.StartCooking(90,1);
+            cook.Stop();
+
+            Thread.Sleep(1500);
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
+
+        }
+
+        [Test] //Tester for integrationen mellem this og UI-klassen. Se definitionerne
+        public void isCookingDone_AfterTimeFinished()
+        {
+            cook.StartCooking(90, 1);
+            
+            ui.CookingIsDone();
+            ui.Received();
+            
+        }
+
+        [Test] //Tester For om Cooking overhovedet gider at cooke igennem Timer og Powertube
         public void isCooking_WhileOn()
         {
             cook.StartCooking(90, 5);
+            //Assert.That(() => cook.StartCooking(90, 5), Throws.TypeOf<ApplicationException>());
+
             Assert.Throws<System.ApplicationException>(() => cook.StartCooking(90, 5));
 
         }
 
-        [TestCase]
-        public void isCookingwhileOn_Stopping()
+        [Test] //Tester for om 
+        public void StopCookingWhilecookingOn()
         {
-
+            
+            cook.StartCooking(90, 1);
             cook.Stop();
-            Assert.That(() => cook.Stop(), Throws.Nothing);
-
-        }
-
-        [TestCase]
-        public void isCookingDone_AfterTimeFinished()
-        {
-            ui.CookingIsDone();
             output.Received();
+            
         }
 
 
-      
+
 
 
 
