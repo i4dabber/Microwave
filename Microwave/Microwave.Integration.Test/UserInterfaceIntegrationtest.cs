@@ -25,6 +25,7 @@ namespace Microwave.Integration.Test
             private ILight inputLight;
             private ICookController inputCookController;
             private IPowerTube inputPower;
+            private ITimer inputTimer;
 
             [SetUp]
             public void Setup()
@@ -36,6 +37,7 @@ namespace Microwave.Integration.Test
                 inputLight = Substitute.For<ILight>();
                 inputCookController = Substitute.For<ICookController>();
                 inputPower = Substitute.For<IPowerTube>();
+                inputTimer = Substitute.For<ITimer>();
 
                 tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, inputCookController);
             }
@@ -67,10 +69,45 @@ namespace Microwave.Integration.Test
 
                 inputPower.Received(50);
 
-
-
                 //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 W")));
             }
+
+            [Test]
+            public void PowerPressedMultipleTimes_Started()
+            {
+                for (int i = 0; i < 14; i++)
+                    tUI.OnPowerPressed(null, null);
+
+                inputPower.Received(700);
+            }
+
+            [Test]
+            public void PowerPressedTooManyTimes_Started()
+            {
+                for (int i = 0; i < 15; i++)
+                    tUI.OnPowerPressed(null, null);
+
+                inputPower.Received(50);
+            }
+
+            [Test]
+            public void TimePressed_Started()
+            {
+                tUI.OnTimePressed(null, null);
+
+                inputTimer.Received(60);
+            }
+
+            [Test]
+            public void TimePressedMultipleTimes_Started()
+            {
+                for (int i = 0; i < 10; i++)
+                    tUI.OnTimePressed(null, null);
+
+                inputTimer.Received(600);
+            }
+
+
 
 
         }
