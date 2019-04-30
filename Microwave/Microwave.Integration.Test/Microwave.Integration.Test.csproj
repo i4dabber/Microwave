@@ -72,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ButtonIntegrationTest.cs" />
-    <Compile Include="DisplayIntegrationTest.cs" />
     <Compile Include="UserInterfaceIntegrationtest.cs" />
     <Compile Include="IT1_CookControlTest.cs" />
     <Compile Include="Program.cs" />

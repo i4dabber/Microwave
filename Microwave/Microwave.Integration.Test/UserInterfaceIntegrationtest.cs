@@ -63,58 +63,6 @@ namespace Microwave.Integration.Test
 
                 inputLight.Received(2);
             }
-
-            [Test]
-            public void PowerPressed_Started()
-            {
-                tUI.OnPowerPressed(null, null);
-
-                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
-            }
-
-            [Test]
-            public void PowerPressedMultipleTimes_Started()
-            {
-                for (int i = 0; i < 14; i++)
-                    tUI.OnPowerPressed(null, null);
-
-                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("700 w")));
-            }
-
-            [Test]
-            public void PowerPressedTooManyTimes_Started()
-            {
-                for (int i = 0; i < 15; i++)
-                    tUI.OnPowerPressed(null, null);
-
-                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
-            }
-
-            [Test]
-            public void TimePressed_Started()
-            {
-                tUI.OnPowerPressed(null, null);
-                tUI.OnTimePressed(null, null);
-
-                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("01:00")));
-            }
-
-            [Test]
-            public void TimePressedMultipleTimes_Started()
-            {
-                tUI.OnPowerPressed(null, null);
-                for (int i = 0; i < 10; i++)
-                    tUI.OnTimePressed(null, null);
-
-                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("10:00")));
-            }
-
-          
-         
-          
-
-
-
         }
     }
 }
