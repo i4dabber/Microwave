@@ -26,6 +26,7 @@ namespace Microwave.Integration.Test
             private ICookController inputCookController;
             private IPowerTube inputPower;
             private ITimer inputTimer;
+            private Button tButton;
 
             [SetUp]
             public void Setup()
@@ -38,6 +39,7 @@ namespace Microwave.Integration.Test
                 inputCookController = Substitute.For<ICookController>();
                 inputPower = Substitute.For<IPowerTube>();
                 inputTimer = Substitute.For<ITimer>();
+                tButton = new Button();
 
                 tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, inputCookController);
             }
@@ -107,23 +109,9 @@ namespace Microwave.Integration.Test
                 output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("10:00")));
             }
 
-            [Test]
-            public void DisplayShows_Power()
-            {
-                //En test der viser hvad Display fremviser Power når mikrobølgeovnen går igang 
-            }
-
-            [Test]
-            public void DisplayShows_Timer()
-            {
-                //En test der viser hvad Display fremviser Timer når mikrobølgeovnen går igang 
-            }
-
-            [Test]
-            public void DisplayShows_Clear()
-            {
-                //En test der viser hvad Display fremviser når Clear() blivr brugt
-            }
+          
+         
+          
 
 
 
