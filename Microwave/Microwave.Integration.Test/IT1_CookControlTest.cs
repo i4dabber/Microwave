@@ -18,14 +18,11 @@ namespace Microwave.Integration.Test
     public class CookControllerTest
     {
 
-        //Fakers
+        
         private ITimer tim;
         private IPowerTube tub;
         private IDisplay disp;
-
         private ICookController cook;
-
-
         private IOutput output;
         private IUserInterface ui;
 
@@ -76,15 +73,15 @@ namespace Microwave.Integration.Test
 
         }
 
-        [Test] //Tester for integrationen mellem this og UI-klassen. Se definitionerne
+        /*[Test] //Tester for integrationen mellem this og UI-klassen. Se definitionerne
         public void isCookingDone_AfterTimeFinished()
         {
             cook.StartCooking(90, 1);
-            
+            cook.Stop(); 
             ui.CookingIsDone();
-            ui.Received();
-            
-        }
+            ui.Received()
+           
+        }*/
 
         [Test] //Tester For om Cooking overhovedet gider at cooke igennem Timer og Powertube
         public void isCooking_WhileOn()
@@ -102,7 +99,10 @@ namespace Microwave.Integration.Test
             
             cook.StartCooking(90, 1);
             cook.Stop();
-            output.Received();
+
+            //Denne her funktion skulle gerne give et boolsk true udtryk, men når jeg kigger på definitionerne - 
+            //Så passer det ikke med det jeg ønsker, selvom testen siger korrekt.
+            output.Received(1);
             
         }
 
