@@ -107,6 +107,23 @@ namespace Microwave.Integration.Test
                 output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("10:00")));
             }
 
+            [Test]
+            public void DisplayShows_Power()
+            {
+                //En test der viser hvad Display fremviser Power når mikrobølgeovnen går igang 
+            }
+
+            [Test]
+            public void DisplayShows_Timer()
+            {
+                //En test der viser hvad Display fremviser Timer når mikrobølgeovnen går igang 
+            }
+
+            [Test]
+            public void DisplayShows_Clear()
+            {
+                //En test der viser hvad Display fremviser når Clear() blivr brugt
+            }
 
 
 
