@@ -72,8 +72,27 @@ namespace Microwave.Integration.Test
 
         }
 
+        [TestCase]
+        public void isCookingwhileOn_Stopping()
+        {
 
-        
+            cook.Stop();
+            Assert.That(() => cook.Stop(), Throws.Nothing);
+
+        }
+
+        [TestCase]
+        public void isCookingDone_AfterTimeFinished()
+        {
+            ui.CookingIsDone();
+            output.Received();
+        }
+
+
+      
+
+
+
 
 
 

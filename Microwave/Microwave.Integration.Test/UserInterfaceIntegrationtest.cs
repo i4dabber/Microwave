@@ -17,20 +17,15 @@ namespace Microwave.Integration.Test
         [TestFixture]
         public class OutputTest
         {
-            private Light lit;
-            private Timer tim;
             private UserInterface tUI;
-            private Door door;
-            private PowerTube tub;
-            private ITimer time;
             private IOutput output;
             private IButton inputButton;
             private IDoor inputDoor;
             private IDisplay inputDisplay;
             private ILight inputLight;
             private ICookController inputCookController;
-            private ITimer inputTimer;
             private IPowerTube inputPower;
+            private ITimer inputTimer;
 
             [SetUp]
             public void Setup()
@@ -38,22 +33,16 @@ namespace Microwave.Integration.Test
                 output = Substitute.For<IOutput>();
                 inputButton = Substitute.For<IButton>();
                 inputDoor = Substitute.For<IDoor>();
-                inputDisplay = Substitute.For<IDisplay>();
+                inputDisplay = new Display(output);
                 inputLight = Substitute.For<ILight>();
                 inputCookController = Substitute.For<ICookController>();
                 inputPower = Substitute.For<IPowerTube>();
                 inputTimer = Substitute.For<ITimer>();
 
-                //lit = new Light(output);
-
-                //door = new Door();
-
-                tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight,
-                    inputCookController);
-
+                tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, inputCookController);
             }
 
-
+           
             [Test]
             public void OpenDoor_DoorIsOpen_LightisOn()
             {
@@ -74,63 +63,53 @@ namespace Microwave.Integration.Test
             }
 
             [Test]
-            public void PowerPressedInputValue_Started()
+            public void PowerPressed_Started()
             {
-                tUI.OnPowerPressed(80, null);
+                tUI.OnPowerPressed(null, null);
 
-                inputPower.Received(80);
-
-
-
-                //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("shows")));
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
             }
 
             [Test]
-            public void PowerDouble_pressed()
+            public void PowerPressedMultipleTimes_Started()
             {
-                tUI.OnPowerPressed(null, null);
-                tUI.OnPowerPressed(null, null);
+                for (int i = 0; i < 14; i++)
+                    tUI.OnPowerPressed(null, null);
 
-                inputPower.Received(100);
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("700 w")));
+            }
 
+            [Test]
+            public void PowerPressedTooManyTimes_Started()
+            {
+                for (int i = 0; i < 15; i++)
+                    tUI.OnPowerPressed(null, null);
+
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
             }
 
             [Test]
             public void TimePressed_Started()
             {
+                tUI.OnPowerPressed(null, null);
                 tUI.OnTimePressed(null, null);
 
-                inputTimer.Received(60);
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("01:00")));
             }
 
             [Test]
-            public void TimeDouble_Pressed_Started()
+            public void TimePressedMultipleTimes_Started()
             {
-                tUI.OnTimePressed(null, null);
-                tUI.OnTimePressed(null, null);
-                inputTimer.Received(120);
+                tUI.OnPowerPressed(null, null);
+                for (int i = 0; i < 10; i++)
+                    tUI.OnTimePressed(null, null);
+
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("10:00")));
             }
 
-            [Test]
-            public void StartCancelButton_Power()
-            {
-                tUI.OnStartCancelPressed(null, null);
-
-                inputPower.Received(50);
-                inputLight.Received(1);
 
 
-            }
 
-            public void StartCancelButton_Light()
-            {
-                tUI.OnStartCancelPressed(null, null);
-
-
-                inputLight.Received(1);
-
-
-            }
         }
     }
 }
