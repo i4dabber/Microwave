@@ -48,11 +48,12 @@ namespace Microwave.Integration.Test
 
                 //door = new Door();
 
-                tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, inputCookController);
+                tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight,
+                    inputCookController);
 
             }
 
-           
+
             [Test]
             public void OpenDoor_DoorIsOpen_LightisOn()
             {
@@ -73,18 +74,63 @@ namespace Microwave.Integration.Test
             }
 
             [Test]
-            public void PowerPressed_Started()
+            public void PowerPressedInputValue_Started()
             {
-                tUI.OnPowerPressed(50, null);
+                tUI.OnPowerPressed(80, null);
 
-                inputPower.Received(50);
+                inputPower.Received(80);
 
 
 
                 //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("shows")));
             }
 
+            [Test]
+            public void PowerDouble_pressed()
+            {
+                tUI.OnPowerPressed(null, null);
+                tUI.OnPowerPressed(null, null);
 
+                inputPower.Received(100);
+
+            }
+
+            [Test]
+            public void TimePressed_Started()
+            {
+                tUI.OnTimePressed(null, null);
+
+                inputTimer.Received(60);
+            }
+
+            [Test]
+            public void TimeDouble_Pressed_Started()
+            {
+                tUI.OnTimePressed(null, null);
+                tUI.OnTimePressed(null, null);
+                inputTimer.Received(120);
+            }
+
+            [Test]
+            public void StartCancelButton_Power()
+            {
+                tUI.OnStartCancelPressed(null, null);
+
+                inputPower.Received(50);
+                inputLight.Received(1);
+
+
+            }
+
+            public void StartCancelButton_Light()
+            {
+                tUI.OnStartCancelPressed(null, null);
+
+
+                inputLight.Received(1);
+
+
+            }
         }
     }
 }
