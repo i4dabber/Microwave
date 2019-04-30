@@ -45,6 +45,7 @@ namespace Microwave.Integration.Test
         [Test] //Tester for om Output klassen modtager data fra this og de andre udnyttede klasser
         public void isCooking_StartingprintingtoOutput()
         {
+            //StartCooking accesser funktionerne TurnOn og Timer Start
             cook.StartCooking(50, 5);
             //ToLower formater strengen til lowcase characters
             output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube works with 7,1 %")));
@@ -66,9 +67,10 @@ namespace Microwave.Integration.Test
         public void isCookingthen_StoppingTime()
         {
             cook.StartCooking(90,1);
+            Thread.Sleep(1500);
+
             cook.Stop();
 
-            Thread.Sleep(1500);
             output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
 
         }
@@ -103,7 +105,8 @@ namespace Microwave.Integration.Test
             //Denne her funktion skulle gerne give et boolsk true udtryk, men når jeg kigger på definitionerne - 
             //Så passer det ikke med det jeg ønsker, selvom testen siger korrekt.
             output.Received(1);
-            
+            //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
+
         }
 
 
