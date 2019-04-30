@@ -33,7 +33,7 @@ namespace Microwave.Integration.Test
                 output = Substitute.For<IOutput>();
                 inputButton = Substitute.For<IButton>();
                 inputDoor = Substitute.For<IDoor>();
-                inputDisplay = Substitute.For<IDisplay>();
+                inputDisplay = new Display(output);
                 inputLight = Substitute.For<ILight>();
                 inputCookController = Substitute.For<ICookController>();
                 inputPower = Substitute.For<IPowerTube>();
@@ -67,9 +67,7 @@ namespace Microwave.Integration.Test
             {
                 tUI.OnPowerPressed(null, null);
 
-                inputPower.Received(50);
-
-                //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 W")));
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
             }
 
             [Test]
@@ -78,7 +76,7 @@ namespace Microwave.Integration.Test
                 for (int i = 0; i < 14; i++)
                     tUI.OnPowerPressed(null, null);
 
-                inputPower.Received(700);
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("700 w")));
             }
 
             [Test]
@@ -87,24 +85,26 @@ namespace Microwave.Integration.Test
                 for (int i = 0; i < 15; i++)
                     tUI.OnPowerPressed(null, null);
 
-                inputPower.Received(50);
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
             }
 
             [Test]
             public void TimePressed_Started()
             {
+                tUI.OnPowerPressed(null, null);
                 tUI.OnTimePressed(null, null);
 
-                inputTimer.Received(60);
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("01:00")));
             }
 
             [Test]
             public void TimePressedMultipleTimes_Started()
             {
+                tUI.OnPowerPressed(null, null);
                 for (int i = 0; i < 10; i++)
                     tUI.OnTimePressed(null, null);
 
-                inputTimer.Received(600);
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("10:00")));
             }
 
 
