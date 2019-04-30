@@ -17,19 +17,13 @@ namespace Microwave.Integration.Test
         [TestFixture]
         public class OutputTest
         {
-            private Light lit;
-            private Timer tim;
             private UserInterface tUI;
-            private Door door;
-            private PowerTube tub;
-            private ITimer time;
             private IOutput output;
             private IButton inputButton;
             private IDoor inputDoor;
             private IDisplay inputDisplay;
             private ILight inputLight;
             private ICookController inputCookController;
-            private ITimer inputTimer;
             private IPowerTube inputPower;
 
             [SetUp]
@@ -42,14 +36,8 @@ namespace Microwave.Integration.Test
                 inputLight = Substitute.For<ILight>();
                 inputCookController = Substitute.For<ICookController>();
                 inputPower = Substitute.For<IPowerTube>();
-                inputTimer = Substitute.For<ITimer>();
-
-                //lit = new Light(output);
-
-                //door = new Door();
 
                 tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, inputCookController);
-
             }
 
            
@@ -75,13 +63,13 @@ namespace Microwave.Integration.Test
             [Test]
             public void PowerPressed_Started()
             {
-                tUI.OnPowerPressed(50, null);
+                tUI.OnPowerPressed(null, null);
 
                 inputPower.Received(50);
 
 
 
-                //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("shows")));
+                //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 W")));
             }
 
 
