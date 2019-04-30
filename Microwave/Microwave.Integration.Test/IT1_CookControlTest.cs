@@ -56,7 +56,9 @@ namespace Microwave.Integration.Test
         public void isTimeRemaining_theexpected()
         {
             cook.StartCooking(90, 1);
-            Thread.Sleep(1500);
+            ManualResetEvent pause = new ManualResetEvent(false);
+
+            pause.WaitOne(1500);
 
             output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
 
@@ -67,23 +69,17 @@ namespace Microwave.Integration.Test
         public void isCookingthen_StoppingTime()
         {
             cook.StartCooking(90,1);
-            Thread.Sleep(1500);
+
+            ManualResetEvent pause = new ManualResetEvent(false);
+
+            pause.WaitOne(1500);
+            
 
             cook.Stop();
 
             output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
 
         }
-
-        /*[Test] //Tester for integrationen mellem this og UI-klassen. Se definitionerne
-        public void isCookingDone_AfterTimeFinished()
-        {
-            cook.StartCooking(90, 1);
-            cook.Stop(); 
-            ui.CookingIsDone();
-            ui.Received()
-           
-        }*/
 
         [Test] //Tester For om Cooking overhovedet gider at cooke igennem Timer og Powertube
         public void isCooking_WhileOn()
@@ -94,21 +90,18 @@ namespace Microwave.Integration.Test
             Assert.Throws<System.ApplicationException>(() => cook.StartCooking(90, 5));
 
         }
-
-        [Test] //Tester for om 
+        
+        [Test] //Tester for om Stop() funktionen fungerer uden delays.  
         public void StopCookingWhilecookingOn()
         {
             
             cook.StartCooking(90, 1);
             cook.Stop();
 
-            //Denne her funktion skulle gerne give et boolsk true udtryk, men når jeg kigger på definitionerne - 
-            //Så passer det ikke med det jeg ønsker, selvom testen siger korrekt.
-            output.Received(1);
-            //output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube turned off")));
 
         }
-
+        
 
 
 

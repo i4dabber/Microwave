@@ -71,8 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IT3_ButtonIntegrationTest.cs" />
-    <Compile Include="IT2_UserInterfaceIntegrationtest.cs" />
+    <Compile Include="IT3_ButtonTest.cs" />
+    <Compile Include="IT2_DoorTest.cs" />
     <Compile Include="IT1_CookControlTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

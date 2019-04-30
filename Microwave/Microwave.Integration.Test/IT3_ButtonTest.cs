@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -26,7 +27,7 @@ namespace Microwave.Integration.Test
             private IDoor inputDoor;
             private IDisplay inputDisplay;
             private ILight inputLight;
-            private ICookController inputCookController;
+            private ICookController tCookController;
             private IPowerTube inputPower;
             private ITimer inputTimer;
             private Button tButton;
@@ -40,12 +41,12 @@ namespace Microwave.Integration.Test
                 inputDoor = Substitute.For<IDoor>();
                 inputDisplay = new Display(output);
                 inputLight = Substitute.For<ILight>();
-                inputCookController = Substitute.For<ICookController>();
-                inputPower = Substitute.For<IPowerTube>();
-                inputTimer = Substitute.For<ITimer>();
+                inputPower = new PowerTube(output);
+                inputTimer = new Timer();
                 tButton = new Button();
 
-                tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, inputCookController);
+                tCookController = new CookController(inputTimer, inputDisplay, inputPower, tUI);
+                tUI = new UserInterface(inputButton, inputButton, inputButton, inputDoor, inputDisplay, inputLight, tCookController);
             }
 
             [Test]
@@ -91,6 +92,31 @@ namespace Microwave.Integration.Test
                     tUI.OnTimePressed(null, null);
 
                 output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("10:00")));
+            }
+
+            [Test]
+            public void StartCancel_Power()
+            {
+                tUI.OnPowerPressed(null, null);
+                tUI.OnTimePressed(null, null);
+                tUI.OnStartCancelPressed(null, null);
+
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("powertube works with")));
+            }
+
+            [Test]
+            public void StartCancel_Timer()
+            {
+                tUI.OnPowerPressed(null, null);
+                tUI.OnTimePressed(null, null);
+                tUI.OnStartCancelPressed(null, null);
+
+                ManualResetEvent pause = new ManualResetEvent(false);
+
+                pause.WaitOne(2100);
+
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("00:58")));
+
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Microwave.Integration.Test
     namespace Microwave.Test.Unit
     {
         [TestFixture]
-        public class OutputTest
+        public class DoorTest
         {
             private UserInterface tUI;
             private IOutput output;
