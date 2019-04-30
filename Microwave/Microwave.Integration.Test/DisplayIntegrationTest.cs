@@ -49,6 +49,22 @@ namespace Microwave.Integration.Test
 
                 output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("cleared")));
             }
+
+            [Test]
+            public void Diplay_power()
+            {
+                inputDisplay.ShowPower(20);
+
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("shows: 20 w")));
+            }
+
+            [Test]
+            public void Display_time()
+            {
+                inputDisplay.ShowTime(16, 20);
+
+                output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("shows: 16:20")));
+            }
         }
     }
 }
