@@ -71,9 +71,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IT3_ButtonTest.cs" />
-    <Compile Include="IT2_DoorTest.cs" />
-    <Compile Include="IT1_CookControlTest.cs" />
+    <Compile Include="IT3_Light.cs" />
+    <Compile Include="IT2_CookControl.cs" />
+    <Compile Include="IT1_UI.cs" />
+    <Compile Include="IT4_Display.cs" />
+    <Compile Include="IT5_Powertube.cs" />
+    <Compile Include="IT6_CookControlDisplay.cs" />
+    <Compile Include="IT7_Timer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
