@@ -11,7 +11,7 @@ using MicrowaveOvenClasses.Controllers;
     using NSubstitute;
     using NUnit.Framework;
 
-namespace Microwave.Test.Unit
+namespace Microwave.Integration.Test
 {
     [TestFixture]
     public class IT3_Light
