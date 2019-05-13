@@ -29,7 +29,6 @@ namespace Microwave.Integration.Test
         private ICookController cc;
         private IOutput output;
 
-
         [SetUp]
         public void Setup()
         {

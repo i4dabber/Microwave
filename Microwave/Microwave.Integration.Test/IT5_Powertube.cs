@@ -46,7 +46,6 @@ namespace Microwave.Integration.Test
 
             cc = new CookController(timer, display, power);
             ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
-            
         }
 
         [Test]

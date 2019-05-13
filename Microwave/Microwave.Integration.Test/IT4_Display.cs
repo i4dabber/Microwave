@@ -28,7 +28,6 @@ namespace Microwave.Integration.Test
         private ICookController cc;
         private IOutput output;
 
-
         [SetUp]
         public void Setup()
         {
@@ -38,14 +37,14 @@ namespace Microwave.Integration.Test
             door = new Door();
 
             output = Substitute.For<IOutput>();
+
             light = Substitute.For<ILight>();
             timer = Substitute.For<ITimer>();
             display = new Display(output);
             power = Substitute.For<IPowerTube>();
             
-
-            ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
             cc = Substitute.For<ICookController>();
+            ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
         }
 
         [Test]
@@ -53,7 +52,7 @@ namespace Microwave.Integration.Test
         {
 
             powerbtn.Press();
-            display.Received().ShowPower(50);
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("50 w")));
 
         }
         [Test]
@@ -62,7 +61,7 @@ namespace Microwave.Integration.Test
 
             powerbtn.Press();
             timerbtn.Press();
-            display.Received().ShowTime(1,0);
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("01:00")));
 
         }
         [Test]
@@ -74,8 +73,8 @@ namespace Microwave.Integration.Test
             startCbtn.Press();
 
             door.Open();
-            display.Received().Clear();
-            
+            output.Received().OutputLine(Arg.Is<string>(str => str.ToLower().Contains("display cleared")));
+
 
         }
 
