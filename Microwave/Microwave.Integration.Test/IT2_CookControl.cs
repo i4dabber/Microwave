@@ -12,68 +12,67 @@ using NUnit.Framework;
 namespace Microwave.Integration.Test
 {
 
-        [TestFixture]
-        public class IT2_CookControl
+    [TestFixture]
+    public class IT2_CookControl
+    {
+        private IDoor door;
+        private IUserInterface ui;
+        private ITimer timer;
+        private IPowerTube power;
+        private IDisplay display;
+        private ILight light;
+        private IButton powerbtn;
+        private IButton timerbtn;
+        private IButton startCbtn;
+        private ICookController cc;
+        private IOutput output;
+
+        [SetUp]
+        public void Setup()
         {
-            private IDoor door;
-            private IUserInterface ui;
-            private ITimer timer;
-            private IPowerTube power;
-            private IDisplay display;
-            private ILight light;
-            private IButton powerbtn;
-            private IButton timerbtn;
-            private IButton startCbtn;
-            private ICookController cc;
-            private IOutput output;
+            startCbtn = new Button();
+            timerbtn = new Button();
+            powerbtn = new Button();
+            door = new Door();
 
-            [SetUp]
-            public void Setup()
-            {
-                startCbtn = new Button();
-                timerbtn = new Button();
-                powerbtn = new Button();
-                door = new Door();
+            output = Substitute.For<IOutput>();
 
-                ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
-                cc = new CookController(timer, display, power);
-
-                light = Substitute.For<ILight>();
-                timer = Substitute.For<ITimer>();
-                display = Substitute.For<IDisplay>();
-                power = Substitute.For<IPowerTube>();
-                output = Substitute.For<IOutput>();
-                
-               
-            }
+            light = Substitute.For<ILight>();
+            timer = Substitute.For<ITimer>();
+            display = Substitute.For<IDisplay>();
+            power = Substitute.For<IPowerTube>();
+            
+            cc = new CookController(timer, display, power);
+            ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
+        }
 
            
-            [Test]
-            public void CookControl_TimerReceived()
-            {
-                powerbtn.Press();
-                timerbtn.Press();
-                startCbtn.Press();
+        [Test]
+        public void CookControl_TimerReceived()
+        {
+            powerbtn.Press();
+            timerbtn.Press();
+            startCbtn.Press();
 
-                timer.Received().Start(60);
+            timer.Received().Start(60);
                
 
-            }
+        }
 
-            [Test]
-            public void CookControl_StopTimer()
-            {
-                powerbtn.Press();
-                timerbtn.Press();
-                startCbtn.Press();
+        [Test]
+        public void CookControl_StopTimer()
+        {
+            powerbtn.Press();
+            timerbtn.Press();
+            startCbtn.Press();
 
-                door.Open();
+            door.Open();
 
-                timer.Received().Stop();
-            }
+            timer.Received().Stop();
+        }
 
 
             
-        }
     }
+}
 

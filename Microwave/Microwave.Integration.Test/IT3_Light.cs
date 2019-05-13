@@ -28,8 +28,6 @@ namespace Microwave.Integration.Test
         private ICookController cc;
         private IOutput output;
 
-
-
         [SetUp]
         public void Setup()
         {
@@ -38,14 +36,15 @@ namespace Microwave.Integration.Test
             powerbtn = new Button();
             door = new Door();
 
-            ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
-            cc = Substitute.For<ICookController>();
+            output = Substitute.For<IOutput>();
 
             light = new Light(output);
             timer = Substitute.For<ITimer>();
             display = Substitute.For<IDisplay>();
             power = Substitute.For<IPowerTube>();
-            output = Substitute.For<IOutput>();
+            
+            cc = Substitute.For<ICookController>();
+            ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
         }
 
 
