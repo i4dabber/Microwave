@@ -39,7 +39,7 @@ namespace Microwave.Integration.Test
 
             output = Substitute.For<IOutput>();
 
-            light = new Light(output);
+            light = Substitute.For<ILight>();
             timer = Substitute.For<ITimer>();
             display = Substitute.For<IDisplay>();
             power = new PowerTube(output);
