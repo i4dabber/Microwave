@@ -48,17 +48,15 @@ namespace Microwave.Integration.Test
             ui = new UserInterface(powerbtn, timerbtn, startCbtn, door, display, light, cc);
         }
 
-        //[Test]
-        //public void timer_Start()
-        //{
-        //    powerbtn.Press();
-        //    timerbtn.Press();
-        //    startCbtn.Press();
+        [Test]
+        public void timer_Start()
+        {
+            powerbtn.Press();
+            timerbtn.Press();
+            startCbtn.Press();
+   
 
-          
-            
-
-        //}
+        }
     }
           
 }
