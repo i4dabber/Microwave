@@ -25,7 +25,7 @@ namespace Microwave.Integration.Test
         private IButton timerbtn;
         private IButton startCbtn;
         private ICookController cc;
-        private IOutput output;
+      
 
         [SetUp]
         public void Setup()
@@ -35,7 +35,7 @@ namespace Microwave.Integration.Test
             powerbtn = new Button();
             door = new Door();
 
-            output = Substitute.For<IOutput>();
+          
 
             light = Substitute.For<ILight>();
             timer = Substitute.For<ITimer>();
