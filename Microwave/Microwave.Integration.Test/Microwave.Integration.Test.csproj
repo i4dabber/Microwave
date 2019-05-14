@@ -77,7 +77,6 @@
     <Compile Include="IT4_Display.cs" />
     <Compile Include="IT5_Powertube.cs" />
     <Compile Include="IT6_CookControlDisplay.cs" />
-    <Compile Include="IT7_Timer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
